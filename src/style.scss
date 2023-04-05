@@ -1,0 +1,117 @@
+@import url('https://fonts.cdnfonts.com/css/zen-kaku-gothic-new');
+@import url('https://fonts.cdnfonts.com/css/code-new-roman-2');
+
+body {
+  background-color: rgba(101, 88, 68, 1);
+}
+* {
+  color: rgba(59, 53, 45, 1);
+}
+.button:hover {
+  transition: 1s;
+  color: rgba(40, 39, 37, 1);
+}
+
+.clock-container{
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 2vw;
+  text-align: center;
+  background-color: rgba(235, 194, 133, 1);
+  
+  max-width: 90vw;
+  min-height: 100vh;
+  margin: 0 2em 0 2em;
+  
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+    "session timer"
+    "break timer";
+  
+  .break-times{ grid-area: break; }
+  .session-times{ grid-area: session; }
+  .break-times, .session-times{
+    font-size: 1.4em;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "label label" "controls time-value";
+    #break-label,#session-label{ grid-area: label; margin: auto; font-weight: 500; }
+    #break-buttons,#session-buttons{ grid-area: controls;}
+    #break-length-line,#session-length-line{
+      grid-area: time-value;
+      text-align: left;
+      margin: 0.1em 0 0 0;
+      justify-content: center;}
+    .button-box{
+      font-size: 1.5em;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      button { border: none; background-color: rgba(0,0,0,0); margin: 0 0 0 1em; width: 1em; height: 0.6em }
+      .fa-caret-up { position: absolute; margin: -0.4em auto auto -0.3em; }
+      .fa-caret-down { position: absolute; margin: -0.6em auto auto -0.3em;}
+    }
+  }
+  
+  .timer-container{
+    grid-area: timer;
+    height: auto;
+    font-size: 2em;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr;
+    grid-template-areas:
+      "timer-icon time-tracker time-tracker"
+      "timer-label time-tracker time-tracker"
+      "timer-buttons time-tracker time-tracker";
+    place-content: center;
+    
+    #timer-icon{
+      grid-area: timer-icon;
+      font-size: 2em;
+      padding: 10vh 0 0;
+    }
+    #timer-label{
+      grid-area: timer-label;
+    }
+    #button-box{
+      grid-area: timer-buttons;
+      
+      font-size: 1.3em;
+      
+      #start_stop, #reset { 
+        width: 8vw;
+        background-color: rgba(0,0,0,0);
+        border: none; }
+    }
+    
+    #time-left-container {
+      grid-area: time-tracker;
+      place-items: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      #time-left {
+        position: relative;
+        font-family: 'Code New Roman', sans-serif;
+        font-size: 1.5em;
+        font-weight: 500;
+        background-color: rgba(235, 194, 133, 0.5);
+        padding: 0.7em 0;
+        height: 3em;
+        border-radius: 2em;
+        z-index: 2;
+        grid-area: 1 / 1 / span 3 / span 3;
+      }
+      #timer-bg {
+        position: relative;
+        font-size: 6em;
+        font-weight: 100;
+        z-index: 1;
+        grid-area: 1 / 1 / span 3 / span 3;
+      }
+    }
+  }
+}

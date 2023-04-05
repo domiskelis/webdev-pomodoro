@@ -1,0 +1,129 @@
+@import url("https://fonts.cdnfonts.com/css/zen-kaku-gothic-new");
+@import url("https://fonts.cdnfonts.com/css/code-new-roman-2");
+body {
+  background-color: #655844;
+}
+
+* {
+  color: #3b352d;
+}
+
+.button:hover {
+  transition: 1s;
+  color: #282725;
+}
+
+.clock-container {
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-size: 2vw;
+  text-align: center;
+  background-color: #ebc285;
+  max-width: 90vw;
+  min-height: 100vh;
+  margin: 0 2em 0 2em;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "session timer" "break timer";
+}
+.clock-container .break-times {
+  grid-area: break;
+}
+.clock-container .session-times {
+  grid-area: session;
+}
+.clock-container .break-times, .clock-container .session-times {
+  font-size: 1.4em;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "label label" "controls time-value";
+}
+.clock-container .break-times #break-label, .clock-container .break-times #session-label, .clock-container .session-times #break-label, .clock-container .session-times #session-label {
+  grid-area: label;
+  margin: auto;
+  font-weight: 500;
+}
+.clock-container .break-times #break-buttons, .clock-container .break-times #session-buttons, .clock-container .session-times #break-buttons, .clock-container .session-times #session-buttons {
+  grid-area: controls;
+}
+.clock-container .break-times #break-length-line, .clock-container .break-times #session-length-line, .clock-container .session-times #break-length-line, .clock-container .session-times #session-length-line {
+  grid-area: time-value;
+  text-align: left;
+  margin: 0.1em 0 0 0;
+  justify-content: center;
+}
+.clock-container .break-times .button-box, .clock-container .session-times .button-box {
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.clock-container .break-times .button-box button, .clock-container .session-times .button-box button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  margin: 0 0 0 1em;
+  width: 1em;
+  height: 0.6em;
+}
+.clock-container .break-times .button-box .fa-caret-up, .clock-container .session-times .button-box .fa-caret-up {
+  position: absolute;
+  margin: -0.4em auto auto -0.3em;
+}
+.clock-container .break-times .button-box .fa-caret-down, .clock-container .session-times .button-box .fa-caret-down {
+  position: absolute;
+  margin: -0.6em auto auto -0.3em;
+}
+.clock-container .timer-container {
+  grid-area: timer;
+  height: auto;
+  font-size: 2em;
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr 2fr;
+  grid-template-areas: "timer-icon time-tracker time-tracker" "timer-label time-tracker time-tracker" "timer-buttons time-tracker time-tracker";
+  place-content: center;
+}
+.clock-container .timer-container #timer-icon {
+  grid-area: timer-icon;
+  font-size: 2em;
+  padding: 10vh 0 0;
+}
+.clock-container .timer-container #timer-label {
+  grid-area: timer-label;
+}
+.clock-container .timer-container #button-box {
+  grid-area: timer-buttons;
+  font-size: 1.3em;
+}
+.clock-container .timer-container #button-box #start_stop, .clock-container .timer-container #button-box #reset {
+  width: 8vw;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+.clock-container .timer-container #time-left-container {
+  grid-area: time-tracker;
+  place-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.clock-container .timer-container #time-left-container #time-left {
+  position: relative;
+  font-family: "Code New Roman", sans-serif;
+  font-size: 1.5em;
+  font-weight: 500;
+  background-color: rgba(235, 194, 133, 0.5);
+  padding: 0.7em 0;
+  height: 3em;
+  border-radius: 2em;
+  z-index: 2;
+  grid-area: 1/1/span 3/span 3;
+}
+.clock-container .timer-container #time-left-container #timer-bg {
+  position: relative;
+  font-size: 6em;
+  font-weight: 100;
+  z-index: 1;
+  grid-area: 1/1/span 3/span 3;
+}
