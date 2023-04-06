@@ -1,3 +1,4 @@
+// Default state
 const defaultState = {
   workTime: 25,
   breakTime: 5,
@@ -7,6 +8,7 @@ const defaultState = {
   timerID: ''
 }
 
+// Component and code
 class Pomodoro extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,9 @@ class Pomodoro extends React.Component {
     this.hardlyWorking = this.hardlyWorking.bind(this);
   };
   
+  // Timer format for display
   formatTime (number,index) {
+    // Sub-function to ensure two-digit number output
     function Stringify(x) {
         if (x<10) { return "0"+String(x) }
         else { return String(x) }
@@ -28,7 +32,11 @@ class Pomodoro extends React.Component {
     return Stringify(minutes)+":"+Stringify(seconds);
   }
   
+  // A function to return either a state description or a fun icon for the display;
+  // takes a custom input of "state-message", "timer-icon" or en else case that
+  // controls whether the start or pause button is rendered.
   hardlyWorking(str) {
+    // Determines state message
     if (str === "state-message") {
       if (!this.state.counting) {
         return "Ready when you are."
@@ -40,6 +48,8 @@ class Pomodoro extends React.Component {
             return "You're on break."
         };
       }
+    
+    // Determines which big icon is displayed
     } else if (str === "timer-icon") {
       if (!this.state.counting) {
         return "fa-solid fa-couch"
@@ -51,6 +61,8 @@ class Pomodoro extends React.Component {
             return "fa-solid fa-otter"
         }
       }
+      
+    // Shows whether the main control will pause or start the timer
     } else if (str === "timer-control") {
       switch(this.state.counting) {
         case false:
@@ -61,26 +73,33 @@ class Pomodoro extends React.Component {
     }
   }
   
+  // Handles the timer counting down
   countDown() {
+    // If not currently counting down, begin count-down
     if (!this.state.counting) {
       let timer = setInterval(() => {
+        // If time left is not zero, increment time by 1s
         if (this.state.currentTime > 0) {
           this.setState(prevstate => ({ currentTime: prevstate.currentTime-1 }));
+        // If time reached zero during work state, play sound and switch to break
         } else if (this.state.work_break === "work") {
           this.setState({ currentTime: this.state.breakTime*60, work_break: "break" });
           document.getElementById("beep").play();
+        // If time reached zero during break state, play sound and switch to work
         } else if (this.state.work_break === "break") {
           this.setState({ currentTime: this.state.workTime*60, work_break: "work" });
           document.getElementById("beep").play();
         }
       } ,1000);
       this.setState({timerID: timer, counting: true});
+    // If already counting, indicates timer is being reset.
     } else { 
       this.setState({ counting: false });
       clearInterval(this.state.timerID);
     }
   }
   
+  // Stops count and resets timer settings to default state.
   resetTimer() {
     if (this.state.counting) {
       clearInterval(this.state.timerID);
@@ -90,14 +109,20 @@ class Pomodoro extends React.Component {
     document.getElementById("beep").load();
   }
   
+  // Handles changes for work or break times
   modifyVal(which,type) {
+    // If changed during active state, stop timer and return to default
     if (this.state.counting) { this.resetTimer(); }
+    
+    // Handler for the break length
     if (which === "break") {
       if (type === "+" && this.state.breakTime < 60) {
         this.setState(prevstate => ({ breakTime: prevstate.breakTime + 1 }));
       } else if (type === "-" && this.state.breakTime > 1) {
         this.setState(prevstate => ({ breakTime: prevstate.breakTime - 1 }));
       }
+      
+    // Handler for the work length
     } else if (which === "work") {
       if (type === "+" && this.state.workTime < 60) {
         let newWork = this.state.workTime + 1;
@@ -109,6 +134,7 @@ class Pomodoro extends React.Component {
     }
   }
   
+  // Renders all components to page
   render () {
     return (
       <div class="clock-container" id="clock-container">
@@ -146,4 +172,5 @@ class Pomodoro extends React.Component {
   }
 }
 
+// Render on load
 ReactDOM.render(<Pomodoro/>,document.getElementById("body"));
